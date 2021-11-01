@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transaction"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.transaction.NewTransactionFragment">
+
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/new_transaction_address_placeholder"
+        android:inputType="textPersonName"
+        android:autofillHints="@string/new_transaction_address_placeholder" />
+
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/new_transaction_amount_placeholder"
+        android:inputType="numberSigned"
+        android:autofillHints="@string/new_transaction_amount_placeholder" />
+
+    <EditText
+        android:id="@+id/etMemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/new_transaction_memo_text_placeholder"
+        android:inputType="textMultiLine"
+        android:autofillHints="@string/new_transaction_memo_text_placeholder" />
+
+    <Button
+        android:id="@+id/btnCommit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_commit" />
+</LinearLayout>

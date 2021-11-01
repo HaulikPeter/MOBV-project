@@ -15,10 +15,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/address_placeholder" />
+        android:text="@string/address_public_placeholder" />
 
     <TextView
-        android:id="@+id/tvAddress"
+        android:id="@+id/tvAddressPublic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textIsSelectable="true" />
@@ -32,5 +32,16 @@
         android:id="@+id/tvBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address_private_placeholder" />
+
+    <TextView
+        android:id="@+id/tvAddressPrivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
 </LinearLayout>

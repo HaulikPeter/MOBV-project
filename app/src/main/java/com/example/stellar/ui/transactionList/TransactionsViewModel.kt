@@ -1,4 +1,4 @@
-package com.example.stellar.ui.transactions
+package com.example.stellar.ui.transactionList
 
 import androidx.lifecycle.ViewModel
 

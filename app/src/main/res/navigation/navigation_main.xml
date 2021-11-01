@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_transactions"
-        android:name="com.example.stellar.ui.transactions.TransactionsFragment"
+        android:name="com.example.stellar.ui.transactionList.TransactionsFragment"
         android:label="@string/menu_transactions"
         tools:layout="@layout/fragment_transactions" />
 

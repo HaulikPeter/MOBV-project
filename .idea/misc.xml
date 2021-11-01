@@ -3,16 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1318607764390897" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.21875" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout-w1240dp/activity_login.xml" value="1.0" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout-w936dp/activity_login.xml" value="0.15390625" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/app_bar_main.xml" value="0.17028985507246377" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/activity_new_transaction.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/activity_transaction.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/app_bar_main.xml" value="0.22" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/content_main.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_contacts.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_gallery.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_hom.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_home.xml" value="0.75" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_new_transaction.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/layout/fragment_transactions.xml" value="0.20104166666666667" />
-        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/menu/menu_activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/menu/menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/redbu/Desktop/Stellar_kotlin/Stellar/app/src/main/res/menu/menu_activity_main.xml" value="0.5" />
       </map>
     </option>
   </component>

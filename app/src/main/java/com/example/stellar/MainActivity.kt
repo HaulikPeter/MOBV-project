@@ -4,15 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavGraph
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.stellar.databinding.ActivityMainBinding
 import com.example.stellar.ui.login.LoginActivity
 import com.example.stellar.ui.login.LoginRepository
-import com.example.stellar.ui.login.LoginViewModel
-import com.example.stellar.ui.transactions.TransactionActivity
+import com.example.stellar.ui.transaction.NewTransactionActivity
+import com.example.stellar.ui.transaction.NewTransactionFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        //setSupportActionBar(binding.appBarMain.toolbar)
+        setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener {
-            val intent = Intent(baseContext, TransactionActivity::class.java)
+            val intent = Intent(baseContext, NewTransactionActivity::class.java)
             startActivity(intent)
         }
 
@@ -38,23 +39,24 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = AppBarConfiguration.Builder(
-            R.id.nav_home, R.id.nav_contacts, R.id.nav_transactions
+            R.id.nav_home, R.id.nav_transactions, R.id.nav_contacts
         )
             .setOpenableLayout(binding.drawerLayout)
             .build()
 
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration)
-        NavigationUI.setupWithNavController(navigationView, navController)
+        setupActionBarWithNavController(this, navController, mAppBarConfiguration)
+        setupWithNavController(navigationView, navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        menuInflater.inflate(R.menu.menu, menu)
         menu?.getItem(0)?.setOnMenuItemClickListener {
             loginRepository.logout()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
             true
         }
 

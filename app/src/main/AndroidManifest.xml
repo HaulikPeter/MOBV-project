@@ -13,11 +13,14 @@
         android:theme="@style/Theme.Stellar"
         android:fullBackupContent="true">
 
-
+        <activity
+            android:name=".ui.transaction.NewTransactionActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Stellar.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
