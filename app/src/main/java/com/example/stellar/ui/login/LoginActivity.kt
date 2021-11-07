@@ -39,14 +39,14 @@ class LoginActivity : AppCompatActivity() {
                     println(loginResult.message)
                     Snackbar.make(
                         binding.root, loginResult.message,
-                        BaseTransientBottomBar.LENGTH_INDEFINITE
+                        BaseTransientBottomBar.LENGTH_SHORT
                     ).show()
                 }
             }
         })
 
         btnLogin.setOnClickListener { loginViewModel.login(etUsername.text.toString()) }
-        btnSignup?.setOnClickListener { loginViewModel.signUp(baseContext) }
+        btnSignup.setOnClickListener { loginViewModel.signUp(baseContext) }
     }
 
 }
