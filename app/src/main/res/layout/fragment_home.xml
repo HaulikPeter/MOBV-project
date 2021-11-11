@@ -1,47 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-    <WebView
-        android:id="@+id/qrCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/llQrCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/address_public_placeholder" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="WebViewLayout">
+        <WebView
+            android:id="@+id/qrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tvAddressPublic"
+        android:id="@+id/tvAddressPlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/address_public_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llQrCode" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/llPublicAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/balance_placeholder" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddressPlaceholder">
+
+        <TextView
+            android:id="@+id/tvAddressPublic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tvAddressPublic"
+            android:textIsSelectable="true" />
+
+        <ImageButton
+            android:id="@+id/btnCopyPublicAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:contentDescription="Copy Public Address" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tvBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
+        android:id="@+id/tvPrivateAddressPlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/address_private_placeholder" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/address_private_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llPublicAddress" />
 
-    <TextView
-        android:id="@+id/tvAddressPrivate"
+    <LinearLayout
+        android:id="@+id/llPrivateAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true" />
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrivateAddressPlaceholder">
+        <TextView
+            android:id="@+id/tvAddressPrivate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tvAddressPrivate"
+            android:textIsSelectable="true"
+            tools:layout_editor_absoluteX="150dp"
+            tools:layout_editor_absoluteY="293dp" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/btnCopyPrivateAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:contentDescription="Copy Private Address" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvBalancePlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/balance_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llPrivateAddress" />
+
+    <LinearLayout
+        android:id="@+id/llBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBalancePlaceholder">
+        <TextView
+            android:id="@+id/tvBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tvBalance"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="455dp" />
+
+        <ImageButton
+            android:id="@+id/btnCopyAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:contentDescription="Copy Amount" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
