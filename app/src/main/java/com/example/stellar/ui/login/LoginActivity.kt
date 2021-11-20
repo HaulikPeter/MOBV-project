@@ -5,10 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.stellar.MainActivity
+import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,6 +30,18 @@ class LoginActivity : AppCompatActivity() {
         val btnSignup = binding.btnSignup
 
         val intent = Intent(this, MainActivity::class.java)
+
+        val repo = StellarDatabaseRepository(StellarDatabase.db(this).dao())
+        lifecycleScope.launch {
+            val user = repo.users()
+            if (user.isEmpty())
+                return@launch
+
+            LoginRepository.getInstance().login(user[0].privateKey)
+            startActivity(intent)
+            setResult(RESULT_OK)
+            finish()
+        }
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
         loginViewModel.loginResult.observe(this, {
@@ -45,8 +61,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        btnLogin.setOnClickListener { loginViewModel.login(etUsername.text.toString()) }
+        btnLogin.setOnClickListener { loginViewModel.login(etUsername.text.toString(), this) }
         btnSignup.setOnClickListener { loginViewModel.signUp(baseContext) }
     }
-
 }

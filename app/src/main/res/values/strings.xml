@@ -23,8 +23,8 @@
     <string name="login_successful">Login Successful</string>
     <string name="btn_sign_up">Sign up</string>
     <string name="btn_login">Login</string>
-    <string name="address_public_placeholder">Public address:</string>
-    <string name="address_private_placeholder">Private address:</string>
+    <string name="address_public_placeholder">Public address</string>
+    <string name="address_private_placeholder">Private address</string>
     <string name="balance_placeholder">Balance</string>
     <string name="new_transaction_address_placeholder">Address</string>
     <string name="new_transaction_amount_placeholder">Amount</string>

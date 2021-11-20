@@ -4,16 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.StellarDatabaseRepository
+import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.databinding.ActivityMainBinding
 import com.example.stellar.ui.login.LoginActivity
 import com.example.stellar.ui.login.LoginRepository
 import com.example.stellar.ui.transaction.NewTransactionActivity
-import com.example.stellar.ui.transaction.NewTransactionFragment
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,9 +58,14 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         menu?.getItem(0)?.setOnMenuItemClickListener {
             loginRepository.logout()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+
+            lifecycleScope.launch {
+                val repo = StellarDatabaseRepository(StellarDatabase.db(this@MainActivity).dao())
+                repo.logout()
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
             true
         }
 

@@ -4,13 +4,18 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.stellar.R
 import com.example.stellar.data.Result
+import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.StellarDatabaseRepository
+import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.data.model.LoginResult
+import kotlinx.coroutines.launch
 import org.stellar.sdk.KeyPair
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -18,9 +23,17 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(secretSeed: String) {
+    fun login(secretSeed: String, context: Context) {
         val result = loginRepository.login(secretSeed)
         if (result is Result.Success) {
+
+            val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).dao())
+            val keyPair = KeyPair.fromSecretSeed(secretSeed)
+            val user = UserEntity(secretSeed, keyPair.accountId, null)
+            viewModelScope.launch {
+                dbRepo.insert(user)
+            }
+
             _loginResult.value =
                 LoginResult(message = R.string.login_successful, successful = true)
         } else {
@@ -39,7 +52,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val friendBotRequest = StringRequest(
             Request.Method.GET,
             url,
-            { login(String(keyPair.secretSeed)) },
+            { login(String(keyPair.secretSeed), context) },
             { error -> println(error) }
         )
         friendBotRequest.retryPolicy = DefaultRetryPolicy(

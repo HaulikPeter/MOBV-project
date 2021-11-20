@@ -48,14 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tvAddressPublic"
-            android:textIsSelectable="true" />
-
-        <ImageButton
-            android:id="@+id/btnCopyPublicAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:contentDescription="Copy Public Address" />
+            android:hint="@string/address_public_placeholder" />
 
     </LinearLayout>
 
@@ -83,16 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tvAddressPrivate"
-            android:textIsSelectable="true"
-            tools:layout_editor_absoluteX="150dp"
-            tools:layout_editor_absoluteY="293dp" />
-
-        <ImageButton
-            android:id="@+id/btnCopyPrivateAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:contentDescription="Copy Private Address" />
+            android:hint="@string/address_private_placeholder" />
     </LinearLayout>
 
     <TextView
@@ -118,15 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tvBalance"
-            tools:layout_editor_absoluteX="181dp"
-            tools:layout_editor_absoluteY="455dp" />
-
-        <ImageButton
-            android:id="@+id/btnCopyAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:contentDescription="Copy Amount" />
+            android:hint="@string/balance_placeholder" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
