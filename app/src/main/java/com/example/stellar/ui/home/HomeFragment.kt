@@ -7,19 +7,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.model.LoggedInUser
 import com.example.stellar.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 import org.json.JSONException
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var dbRepo: StellarDatabaseRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,18 +36,30 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        binding.btnCopyPublicAddress.setOnClickListener { onClickCopyPublicAddress() }
+        binding.tvAddressPublic.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
+        binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
+        binding.tvBalance.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
-        homeViewModel.getUser()?.observe(viewLifecycleOwner, { observeUser(it) })
+        dbRepo = StellarDatabaseRepository(StellarDatabase.db(this.requireContext()).dao())
+
+        lifecycleScope.launch {
+            val user = dbRepo.users()[0]
+            if (user.balance.isNullOrEmpty()) {
+                homeViewModel.getUser()?.observe(viewLifecycleOwner, { observeUser(it) })
+            } else {
+                user.balance?.let { binding.tvBalance.text = it }
+            }
+        }
+
         return binding.root
     }
 
-    private fun onClickCopyPublicAddress() {
-        val addressCopy = binding.tvAddressPublic.text.toString()
-
+    private fun copyTextViewContentToClipboard(textView: TextView) {
         val manager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newPlainText("PublicAddress", addressCopy)
+        val clipData = ClipData.newPlainText("Data", textView.text.toString())
         manager.setPrimaryClip(clipData)
+
+        Toast.makeText(context, textView.hint.toString() + " copied!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {
@@ -65,6 +84,15 @@ class HomeFragment : Fragment() {
                 tvAddressPublic.text = accountId
                 //tvAddressPublic.text = cutStringInHalf(accountId)
                 tvBalance.text = balance
+
+                //-------
+                lifecycleScope.launch {
+                    val user = dbRepo.users()[0]
+                    user.balance = balance
+                    dbRepo.update(user)
+                }
+                //-------
+
                 tvAddressPrivate.text = user?.getSecretSeed()
                 //user?.getSecretSeed().let { tvAddressPrivate.text = it }
                 qrCode.loadUrl("https://chart.googleapis.com/chart?chs=170x170&chld=M%7C0&cht=qr&chl=" + user?.getAccountId())
