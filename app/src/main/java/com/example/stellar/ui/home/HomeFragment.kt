@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -95,7 +96,7 @@ class HomeFragment : Fragment() {
 
                 tvAddressPrivate.text = user?.getSecretSeed()
                 //user?.getSecretSeed().let { tvAddressPrivate.text = it }
-                qrCode.loadUrl("https://chart.googleapis.com/chart?chs=170x170&chld=M%7C0&cht=qr&chl=" + user?.getAccountId())
+                qrCode.loadUrl("https://chart.googleapis.com/chart?chs=100x100&chld=M%7C0&cht=qr&chl=" + user?.getAccountId())
             } catch (e: JSONException) {
                 println("PARSE Error")
                 e.printStackTrace()

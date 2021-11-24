@@ -20,11 +20,15 @@ class NewTransactionFragment : Fragment() {
     ): View {
 
         binding = FragmentNewTransactionBinding.inflate(inflater, container, false)
-
         val btnCommit = binding.btnCommit
         val etAddress = binding.etAddress
         val etAmount = binding.etAmount
         val etMemo = binding.etMemo
+
+        val publicKey = requireActivity().intent.extras?.getString("publicKey")
+        if (publicKey != null) {
+            etAddress.setText(publicKey)
+        }
 
         btnCommit.setOnClickListener {
             val server = Server("https://horizon-testnet.stellar.org")

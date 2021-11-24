@@ -6,13 +6,15 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Stellar"
-        android:fullBackupContent="true">
-
+        android:theme="@style/Theme.Stellar">
+        <activity
+            android:name=".ui.contacts.edit.ContactEditActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.transaction.NewTransactionActivity"
             android:exported="true" />

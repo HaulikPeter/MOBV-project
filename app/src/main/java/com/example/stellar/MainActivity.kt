@@ -12,8 +12,8 @@ import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.stellar.data.database.StellarDatabase
 import com.example.stellar.data.database.StellarDatabaseRepository
-import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.databinding.ActivityMainBinding
+import com.example.stellar.ui.contacts.edit.ContactEditActivity
 import com.example.stellar.ui.login.LoginActivity
 import com.example.stellar.ui.login.LoginRepository
 import com.example.stellar.ui.transaction.NewTransactionActivity
@@ -34,11 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener {
-            val intent = Intent(baseContext, NewTransactionActivity::class.java)
-            startActivity(intent)
-        }
-
         val navigationView = binding.navView
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -51,6 +46,16 @@ class MainActivity : AppCompatActivity() {
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
         setupActionBarWithNavController(this, navController, mAppBarConfiguration)
         setupWithNavController(navigationView, navController)
+
+        binding.appBarMain.fab.setOnClickListener {
+            val intent: Intent
+            if (navController.currentDestination!!.id == R.id.nav_contacts) {
+                intent = Intent(baseContext, ContactEditActivity::class.java)
+            } else {
+                intent = Intent(baseContext, NewTransactionActivity::class.java)
+            }
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
