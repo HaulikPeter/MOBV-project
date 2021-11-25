@@ -1,108 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/llQrCode"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="WebViewLayout">
-        <WebView
-            android:id="@+id/qrCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvAddressPlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/address_public_placeholder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llQrCode" />
-
-    <LinearLayout
-        android:id="@+id/llPublicAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddressPlaceholder">
+        android:orientation="vertical"
+        tools:context=".ui.home.HomeFragment">
 
         <TextView
-            android:id="@+id/tvAddressPublic"
+            android:id="@+id/tvAddressPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tvAddressPublic"
-            android:hint="@string/address_public_placeholder" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/address_public_placeholder"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llPublicAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressPlaceholder">
 
-    <TextView
-        android:id="@+id/tvPrivateAddressPlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/address_private_placeholder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llPublicAddress" />
+            <TextView
+                android:id="@+id/tvAddressPublic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvAddressPublic"
+                android:hint="@string/address_public_placeholder" />
 
-    <LinearLayout
-        android:id="@+id/llPrivateAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrivateAddressPlaceholder">
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/tvAddressPrivate"
+            android:id="@+id/tvPrivateAddressPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tvAddressPrivate"
-            android:hint="@string/address_private_placeholder" />
-    </LinearLayout>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:text="@string/address_private_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llPublicAddress" />
 
-    <TextView
-        android:id="@+id/tvBalancePlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/balance_placeholder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llPrivateAddress" />
+        <LinearLayout
+            android:id="@+id/llPrivateAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrivateAddressPlaceholder">
+            <TextView
+                android:id="@+id/tvAddressPrivate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tvAddressPrivate"
+                android:hint="@string/address_private_placeholder" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBalancePlaceholder">
         <TextView
-            android:id="@+id/tvBalance"
+            android:id="@+id/tvBalancePlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tvBalance"
-            android:hint="@string/balance_placeholder" />
-    </LinearLayout>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/balance_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llPrivateAddress" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/llBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBalancePlaceholder">
+            <TextView
+                android:id="@+id/tvBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textAllCaps="true"
+                android:textColor="@color/purple_500"
+                android:text="tvBalance"
+                android:hint="@string/balance_placeholder" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llQrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llBalance"
+            tools:ignore="WebViewLayout">
+
+            <WebView
+                android:id="@+id/qrCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

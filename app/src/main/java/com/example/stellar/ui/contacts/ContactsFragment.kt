@@ -26,7 +26,7 @@ class ContactsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val database: ContactDatabaseDao = StellarDatabase.db(this.requireContext()).contactsDao()
         viewModel = ViewModelProvider(this, ContactsViewModelFactory(database)).get(ContactsViewModel::class.java)
 
@@ -55,12 +55,12 @@ class ContactsFragment : Fragment() {
         })
 
         // TODO: len na testovanie, zmazat potom
-        Thread {
-            for (i in 1..20) {
-                database.insert(ContactEntity("public key $i", "Jozko $i"))
-            }
-            println("insert")
-        }.start()
+//        Thread {
+//            for (i in 1..20) {
+//                database.insert(ContactEntity("public key $i", "Jozko $i"))
+//            }
+//            println("insert")
+//        }.start()
 
         return binding.root
     }
