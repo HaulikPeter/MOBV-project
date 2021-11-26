@@ -25,6 +25,9 @@ interface ContactDatabaseDao {
     @Query("DELETE FROM contacts WHERE publicKey = :publicKey")
     fun delete(publicKey: String)
 
+    @Query("DELETE FROM contacts")
+    suspend fun clear()
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(contact: ContactEntity)
 }

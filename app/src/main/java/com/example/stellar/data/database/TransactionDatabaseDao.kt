@@ -14,7 +14,7 @@ interface TransactionDatabaseDao {
      suspend fun insert(transaction: Transaction)
 
      @Query("SELECT * FROM transactions_table")
-     suspend fun getAllTransactions(): List<Transaction>
+     suspend fun getAllTransactions(): MutableList<Transaction>
 
      @Query("DELETE FROM transactions_table")
      suspend fun clear()

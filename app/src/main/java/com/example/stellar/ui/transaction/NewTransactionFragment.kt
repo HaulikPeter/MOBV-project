@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.stellar.databinding.FragmentNewTransactionBinding
 import com.example.stellar.ui.login.LoginRepository
+import kotlinx.coroutines.launch
 import org.stellar.sdk.*
 
 class NewTransactionFragment : Fragment() {
@@ -31,11 +34,18 @@ class NewTransactionFragment : Fragment() {
         }
 
         btnCommit.setOnClickListener {
-            val server = Server("https://horizon-testnet.stellar.org")
-            val user = LoginRepository.getInstance().user
-            val destination = KeyPair.fromAccountId(etAddress.text.toString())
+            if (etAddress.text.isEmpty() || etAmount.text.isEmpty())
+                return@setOnClickListener
+
             Thread {
                 try {
+                    val server = Server("https://horizon-testnet.stellar.org")
+
+                    server.accounts().account(etAddress.text.toString())
+
+                    val user = LoginRepository.getInstance().user
+                    val destination = KeyPair.fromAccountId(etAddress.text.toString())
+
                     val account = server.accounts().account(user?.getAccountId())
                     val transaction = Transaction.Builder(account, Network.TESTNET)
                         .addOperation(
@@ -61,6 +71,13 @@ class NewTransactionFragment : Fragment() {
                     }
                 } catch (e: Throwable) {
                     e.printStackTrace()
+                    lifecycleScope.launch {
+                        Toast.makeText(
+                            this@NewTransactionFragment.requireContext(),
+                            "Incorrect credentials!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }.start()
         }

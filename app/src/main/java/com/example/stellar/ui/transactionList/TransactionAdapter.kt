@@ -1,5 +1,6 @@
 package com.example.stellar.ui.transactionList
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>()
         const val DEBIT = 1
     }
 
-    private val transactionList = mutableListOf<Transaction>()
+    private var transactionList = mutableListOf<Transaction>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -45,6 +46,14 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>()
         transactionList.add(0, transaction)
         notifyItemInserted(0)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addAllTransactions(transactions: MutableList<Transaction>) {
+        transactionList = transactions
+        notifyDataSetChanged()
+    }
+
+    fun contains(id: Long) = transactionList.find { t -> t.uid == id } != null
 
     override fun getItemCount() = transactionList.size
 

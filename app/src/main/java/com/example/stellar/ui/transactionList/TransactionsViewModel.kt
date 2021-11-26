@@ -23,7 +23,7 @@ class TransactionsViewModel(context: Context) : ViewModel() {
     private val loginRepository: LoginRepository?
     val adapter: TransactionAdapter
     private val db: StellarDatabase
-    private lateinit var dbTransactionList: List<Transaction>
+    private lateinit var dbTransactionList: MutableList<Transaction>
 
     init {
         loginRepository = LoginRepository.getInstance()
@@ -33,6 +33,7 @@ class TransactionsViewModel(context: Context) : ViewModel() {
         db = StellarDatabase.db(context)
         viewModelScope.launch {
             dbTransactionList = db.transactionsDao().getAllTransactions()
+            adapter.addAllTransactions(dbTransactionList.reversed().toMutableList())
         }
     }
 
@@ -45,26 +46,27 @@ class TransactionsViewModel(context: Context) : ViewModel() {
         paymentRequest.stream(object : EventListener<OperationResponse> {
             override fun onEvent(operation: OperationResponse?) {
 
-                // TODO: Check if db contains instance of the transaction by its id, if so, skip
-
-                val transaction = operation?.let { Transaction(it.id) }
-
                 // The payments stream includes both sent and received payments.
                 if (operation is PaymentOperationResponse) {
-                    transaction?.apply {
-                        sourceAddress = operation.from
-                        destinationAddress = operation.to
-                        amount = operation.amount
-                        memo = server.transactions().transaction(operation.transactionHash).memo.toString()
+
+                    if (adapter.contains(operation.id))
+                        return
+
+                    val transaction = Transaction(
+                        uid = operation.id,
+                        sourceAddress = operation.from,
+                        destinationAddress = operation.to,
+                        amount = operation.amount,
+                        memo = server.transactions().transaction(operation.transactionHash).memo.toString(),
                         date = operation.createdAt
-                    }
+                    )
 
                     if (operation.from == userId?.getAccountId())
-                        transaction?.type = TransactionAdapter.DEBIT
+                        transaction.type = TransactionAdapter.DEBIT
                     else
-                        transaction?.type = TransactionAdapter.CREDIT
+                        transaction.type = TransactionAdapter.CREDIT
 
-                    transaction?.let {
+                    transaction.let {
                         this@TransactionsViewModel.viewModelScope.launch {
                             adapter.addTransaction(it)
                             recyclerView.scrollToPosition(0)
@@ -74,9 +76,7 @@ class TransactionsViewModel(context: Context) : ViewModel() {
                 }
             }
 
-            override fun onFailure(p0: Optional<Throwable>?, p1: Optional<Int>?) {
-                TODO("throw exception")
-            }
+            override fun onFailure(p0: Optional<Throwable>?, p1: Optional<Int>?) { }
         })
     }
 }

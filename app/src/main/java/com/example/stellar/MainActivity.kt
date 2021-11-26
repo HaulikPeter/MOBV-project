@@ -1,8 +1,10 @@
 package com.example.stellar
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var loginRepository: LoginRepository
+    private lateinit var db: StellarDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loginRepository = LoginRepository.getInstance()
         binding = ActivityMainBinding.inflate(layoutInflater)
+        loginRepository = LoginRepository.getInstance()
+        db = StellarDatabase.db(this)
 
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -48,11 +52,10 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(navigationView, navController)
 
         binding.appBarMain.fab.setOnClickListener {
-            val intent: Intent
-            if (navController.currentDestination!!.id == R.id.nav_contacts) {
-                intent = Intent(baseContext, ContactEditActivity::class.java)
+            val intent: Intent = if (navController.currentDestination?.id == R.id.nav_contacts) {
+                Intent(baseContext, ContactEditActivity::class.java)
             } else {
-                intent = Intent(baseContext, NewTransactionActivity::class.java)
+                Intent(baseContext, NewTransactionActivity::class.java)
             }
             startActivity(intent)
         }
@@ -62,19 +65,44 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
         menu?.getItem(0)?.setOnMenuItemClickListener {
-            loginRepository.logout()
-
-            lifecycleScope.launch {
-                val repo = StellarDatabaseRepository(StellarDatabase.db(this@MainActivity).dao())
-                repo.logout()
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            askToDeleteContactsAndLogout()
             true
         }
 
         return true
+    }
+
+    private fun askToDeleteContactsAndLogout() {
+        val listener = DialogInterface.OnClickListener { _, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> { lifecycleScope.launch {
+                    db.contactsDao().clear()
+                    db.transactionsDao().clear()
+                    loginRepository.logout()
+                    StellarDatabaseRepository(db.dao()).logout()
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }}
+                DialogInterface.BUTTON_NEUTRAL -> { return@OnClickListener }
+                DialogInterface.BUTTON_NEGATIVE -> { lifecycleScope.launch {
+                    db.transactionsDao().clear()
+                    loginRepository.logout()
+                    StellarDatabaseRepository(db.dao()).logout()
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }}
+            }
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setMessage("Do you wish to delete the contact list as well?")
+            .setPositiveButton("Yes", listener)
+            .setNeutralButton("Cancel", listener)
+            .setNegativeButton("No", listener)
+            .show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
