@@ -15,6 +15,8 @@ import com.example.stellar.data.database.StellarDatabase
 import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.data.model.LoginResult
+import com.example.stellar.ui.auth.addKey
+import com.example.stellar.ui.auth.encrypt
 import kotlinx.coroutines.launch
 import org.stellar.sdk.KeyPair
 
@@ -23,14 +25,17 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(secretSeed: String, context: Context) {
-        val result = loginRepository.login(secretSeed)
+    fun login(secretSeed: String, pin: String, context: Context) {
+        val result = loginRepository.login(secretSeed.toCharArray())
         if (result is Result.Success) {
 
-            val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).dao())
-            val keyPair = KeyPair.fromSecretSeed(secretSeed)
-            val user = UserEntity(secretSeed, keyPair.accountId, null)
             viewModelScope.launch {
+                val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).dao())
+
+                val accountId = KeyPair.fromSecretSeed(secretSeed.toCharArray()).accountId
+                val encryptedPrivateKey = secretSeed.encrypt(pin.addKey())
+
+                val user = UserEntity(encryptedPrivateKey, accountId, null)
                 dbRepo.insert(user)
             }
 
@@ -43,7 +48,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     //Toto bolo pridane
-    fun signUp(context: Context) {
+    fun signUp(context: Context, pin: String) {
         val keyPair = KeyPair.random()
         // https://developer.android.com/training/volley/simple#kotlin
         val queue = Volley.newRequestQueue(context)
@@ -52,7 +57,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val friendBotRequest = StringRequest(
             Request.Method.GET,
             url,
-            { login(String(keyPair.secretSeed), context) },
+            { login(keyPair.secretSeed.toString(), pin, context) },
             { error -> println(error) }
         )
         friendBotRequest.retryPolicy = DefaultRetryPolicy(

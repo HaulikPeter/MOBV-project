@@ -20,6 +20,7 @@ import com.example.stellar.data.database.StellarDatabase
 import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.model.LoggedInUser
 import com.example.stellar.databinding.FragmentHomeBinding
+import com.example.stellar.ui.auth.PromptPinDialogFragment
 import kotlinx.coroutines.launch
 import org.json.JSONException
 
@@ -38,7 +39,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         binding.tvAddressPublic.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
-        binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
+        binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) } // TODO: onClick show private key
         binding.tvBalance.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
         dbRepo = StellarDatabaseRepository(StellarDatabase.db(this.requireContext()).dao())
