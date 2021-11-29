@@ -7,8 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.databinding.FragmentNewTransactionBinding
+import com.example.stellar.ui.auth.PromptPinDialogFragment
+import com.example.stellar.ui.auth.addKey
+import com.example.stellar.ui.auth.decrypt
 import com.example.stellar.ui.login.LoginRepository
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.stellar.sdk.*
 
@@ -37,53 +44,86 @@ class NewTransactionFragment : Fragment() {
             if (etAddress.text.isEmpty() || etAmount.text.isEmpty())
                 return@setOnClickListener
 
-            //TODO("Ask Pin before realising transaction!")
 
-            Thread {
-                try {
-                    val server = Server("https://horizon-testnet.stellar.org")
+            val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).dao())
+            lifecycleScope.launch {
 
-                    server.accounts().account(etAddress.text.toString())
+                val user = repo.users()
 
-                    val user = LoginRepository.getInstance().user
-                    val destination = KeyPair.fromAccountId(etAddress.text.toString())
-
-                    val account = server.accounts().account(user?.getAccountId())
-                    val transaction = Transaction.Builder(account, Network.TESTNET)
-                        .addOperation(
-                            PaymentOperation.Builder(
-                                destination.accountId,
-                                AssetTypeNative(),
-                                etAmount.text.toString()
-                            ).build()
-                        )
-                        .addMemo(Memo.text(etMemo.text.toString()))
-                        .setTimeout(180)
-                        .setBaseFee(Transaction.MIN_BASE_FEE)
-                        .build()
-
-                    transaction.sign(user?.getKeyPair())
+                val fragment = PromptPinDialogFragment { pin ->
 
                     try {
-                        server.submitTransaction(transaction)
-                        activity?.finish()
-                    } catch (e: Throwable) {
-                        println("Submit to server FAILED")
-                        e.printStackTrace()
-                    }
-                } catch (e: Throwable) {
-                    e.printStackTrace()
-                    lifecycleScope.launch {
-                        Toast.makeText(
-                            this@NewTransactionFragment.requireContext(),
-                            "Incorrect credentials!",
-                            Toast.LENGTH_SHORT
+                        var pk = user[0].privateKey.decrypt(pin.addKey()).toCharArray()
+                        startConnection(pk)
+
+
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            binding.root, "Wrong pin! Please try again!",
+                            BaseTransientBottomBar.LENGTH_SHORT
+
                         ).show()
                     }
                 }
-            }.start()
+
+                fragment.show(parentFragmentManager, "PromptPinDialogFragment")
+
+            }
+
         }
         return binding.root
+    }
+
+
+
+    private fun startConnection(pk: CharArray) {
+        val etAddress = binding.etAddress
+        val etAmount = binding.etAmount
+        val etMemo = binding.etMemo
+        Thread {
+            try {
+                val server = Server("https://horizon-testnet.stellar.org")
+
+                server.accounts().account(etAddress.text.toString())
+
+                val user = LoginRepository.getInstance().user
+                val destination = KeyPair.fromAccountId(etAddress.text.toString())
+
+                val account = server.accounts().account(user?.getAccountId())
+                val transaction = Transaction.Builder(account, Network.TESTNET)
+                    .addOperation(
+                        PaymentOperation.Builder(
+                            destination.accountId,
+                            AssetTypeNative(),
+                            etAmount.text.toString()
+                        ).build()
+                    )
+                    .addMemo(Memo.text(etMemo.text.toString()))
+                    .setTimeout(180)
+                    .setBaseFee(Transaction.MIN_BASE_FEE)
+                    .build()
+
+
+                transaction.sign(KeyPair.fromSecretSeed(pk))
+
+                try {
+                    server.submitTransaction(transaction)
+                    activity?.finish()
+                } catch (e: Throwable) {
+                    println("Submit to server FAILED")
+                    e.printStackTrace()
+                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                lifecycleScope.launch {
+                    Toast.makeText(
+                        this@NewTransactionFragment.requireContext(),
+                        "Incorrect credentials!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }.start()
     }
 
 }
