@@ -16,7 +16,7 @@ class LoginRepository(private val dataSource: LoginDataSource) {
         user = null
     }
 
-    fun login(secretKey: CharArray): Result<LoggedInUser> {
+    fun login(secretKey: String): Result<LoggedInUser> {
         val result = dataSource.login(secretKey)
         if (result is Result.Success)
             setLoggedInUser(result.data)

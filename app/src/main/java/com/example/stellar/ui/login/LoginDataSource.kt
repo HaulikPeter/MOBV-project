@@ -6,7 +6,7 @@ import org.stellar.sdk.KeyPair
 import java.io.IOException
 
 class LoginDataSource {
-    fun login(secretSeed: CharArray): Result<LoggedInUser> {
+    fun login(secretSeed: String): Result<LoggedInUser> {
         return try {
             val fakeUser = LoggedInUser(KeyPair.fromSecretSeed(secretSeed))
             Result.Success(fakeUser)

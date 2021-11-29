@@ -15,7 +15,7 @@ import com.example.stellar.ui.transactionList.Transaction
 @Database(entities = [
     UserEntity::class,
     ContactEntity::class,
-    Transaction::class], version = 2, exportSchema = false)
+    Transaction::class], version = 3, exportSchema = false)
 abstract class StellarDatabase : RoomDatabase() {
 
     abstract fun dao(): StellarDatabaseDao

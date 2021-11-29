@@ -26,13 +26,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(secretSeed: String, pin: String, context: Context) {
-        val result = loginRepository.login(secretSeed.toCharArray())
+        val result = loginRepository.login(secretSeed)
         if (result is Result.Success) {
 
             viewModelScope.launch {
                 val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).dao())
 
-                val accountId = KeyPair.fromSecretSeed(secretSeed.toCharArray()).accountId
+                val accountId = KeyPair.fromSecretSeed(secretSeed).accountId
                 val encryptedPrivateKey = secretSeed.encrypt(pin.addKey())
 
                 val user = UserEntity(encryptedPrivateKey, accountId, null)
@@ -57,7 +57,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val friendBotRequest = StringRequest(
             Request.Method.GET,
             url,
-            { login(keyPair.secretSeed.toString(), pin, context) },
+            { login(String(keyPair.secretSeed), pin, context) },
             { error -> println(error) }
         )
         friendBotRequest.retryPolicy = DefaultRetryPolicy(

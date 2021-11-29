@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
 //                loginViewModel.login(user[0].privateKey, pin, this@LoginActivity)
                 try {
                     LoginRepository.getInstance()
-                        .login(user[0].privateKey.decrypt(pin.addKey()).toCharArray())
+                        .login(user[0].privateKey.decrypt(pin.addKey()))
                     startActivity(intent)
                     setResult(RESULT_OK)
                     finish()
