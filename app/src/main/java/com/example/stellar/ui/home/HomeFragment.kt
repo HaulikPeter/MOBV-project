@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.stellar.R
 import com.example.stellar.data.database.StellarDatabase
 import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.model.LoggedInUser
@@ -23,7 +23,6 @@ import com.example.stellar.databinding.FragmentHomeBinding
 import com.example.stellar.ui.auth.PromptPinDialogFragment
 import com.example.stellar.ui.auth.addKey
 import com.example.stellar.ui.auth.decrypt
-import com.example.stellar.ui.login.LoginRepository
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -62,7 +61,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun copyTextViewContentToClipboard(textView: TextView) {
-        val manager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val manager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("Data", textView.text.toString())
         manager.setPrimaryClip(clipData)
 
@@ -79,9 +78,10 @@ class HomeFragment : Fragment() {
 
                 try {
                     binding.tvAddressPrivate.text = user[0].privateKey.decrypt(pin.addKey())
+                    binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
                 } catch (e: Exception) {
-                    binding.tvAddressPrivate.text = "Pin code needed!"
+                    binding.tvAddressPrivate.text = resources.getText(R.string.require_pin)
                     Snackbar.make(
                         binding.root, "Wrong pin! Please try again!",
                         BaseTransientBottomBar.LENGTH_SHORT
@@ -114,7 +114,6 @@ class HomeFragment : Fragment() {
                 val balance =
                     response.getJSONArray("balances").getJSONObject(0).getString("balance")
                 tvAddressPublic.text = accountId
-                //tvAddressPublic.text = cutStringInHalf(accountId)
                 tvBalance.text = balance
 
                 //-------
@@ -125,8 +124,7 @@ class HomeFragment : Fragment() {
                 }
                 //-------
 
-                tvAddressPrivate.text = "Pin code needed!"
-                //user?.getSecretSeed().let { tvAddressPrivate.text = it }
+                tvAddressPrivate.text = resources.getText(R.string.require_pin)
                 qrCode.loadUrl("https://chart.googleapis.com/chart?chs=100x100&chld=M%7C0&cht=qr&chl=" + user?.getAccountId())
             } catch (e: JSONException) {
                 println("PARSE Error")
@@ -139,17 +137,5 @@ class HomeFragment : Fragment() {
         }
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest)
-    }
-
-    private fun cutStringInHalf(text: String): String {
-        var tmp = text
-        var output = ""
-        while (tmp.length > 28) {
-            val buffer = tmp.substring(0, 28)
-            output = output + buffer + "\n"
-            tmp = tmp.substring(28)
-        }
-        output += tmp.substring(0)
-        return output
     }
 }

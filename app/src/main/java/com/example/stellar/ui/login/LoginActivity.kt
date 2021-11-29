@@ -2,6 +2,8 @@ package com.example.stellar.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -44,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 return@launch
 
 //            LoginRepository.getInstance().login(user[0].privateKey.toCharArray())
-            val fragment = PromptPinDialogFragment { pin ->
+            val fragment = PromptPinDialogFragment( { pin ->
 //                loginViewModel.login(user[0].privateKey, pin, this@LoginActivity)
                 try {
                     LoginRepository.getInstance()
@@ -61,11 +63,12 @@ class LoginActivity : AppCompatActivity() {
                         StellarDatabaseRepository(db.dao()).logout()
                     }
                     Snackbar.make(
-                        binding.root, "Wrong pin! Please log in again!",
+                        binding.root, "Wrong pin! Database cleared!",
                         BaseTransientBottomBar.LENGTH_SHORT
                     ).show()
                 }
-            }
+            }, "Caution! Wrong password causes logout!")
+            fragment.isCancelable = false
             fragment.show(supportFragmentManager, "PromptPinDialogFragment")
         }
 

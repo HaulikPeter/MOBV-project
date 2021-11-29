@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.example.stellar.R
@@ -14,8 +15,13 @@ import com.example.stellar.databinding.FragmentPromptPinBinding
 
 class PromptPinDialogFragment(private val onSuccess: (pin: String) -> Unit) : DialogFragment() {
 
+    constructor(onSuccess: (pin: String) -> Unit, message: String?) : this(onSuccess) {
+        this.message = message
+    }
+
     private lateinit var binding: FragmentPromptPinBinding
     private lateinit var etEnterPin: EditText
+    private var message: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +34,12 @@ class PromptPinDialogFragment(private val onSuccess: (pin: String) -> Unit) : Di
         val i2 = binding.ivCircle2
         val i3 = binding.ivCircle3
         val i4 = binding.ivCircle4
+
+        message?.let {
+            val tvMessage = binding.tvMessage
+            tvMessage.visibility = TextView.VISIBLE
+            tvMessage.text = it
+        }
 
         etEnterPin = binding.etEnterPin
 

@@ -72,10 +72,18 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberPassword"
                 android:textSize="11sp"
-                android:maxLength="4"
-                android:visibility="visible" >
+                android:maxLength="4">
             </EditText>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:layout_margin="10dp" />
     </LinearLayout>
 </LinearLayout>
