@@ -37,6 +37,8 @@ class NewTransactionFragment : Fragment() {
             if (etAddress.text.isEmpty() || etAmount.text.isEmpty())
                 return@setOnClickListener
 
+            //TODO("Ask Pin before realising transaction!")
+
             Thread {
                 try {
                     val server = Server("https://horizon-testnet.stellar.org")

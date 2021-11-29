@@ -21,6 +21,11 @@ import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.model.LoggedInUser
 import com.example.stellar.databinding.FragmentHomeBinding
 import com.example.stellar.ui.auth.PromptPinDialogFragment
+import com.example.stellar.ui.auth.addKey
+import com.example.stellar.ui.auth.decrypt
+import com.example.stellar.ui.login.LoginRepository
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.json.JSONException
 
@@ -39,7 +44,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         binding.tvAddressPublic.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
-        binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) } // TODO: onClick show private key
+        binding.tvAddressPrivate.setOnClickListener { showPrivateKeyOnClick() }
         binding.tvBalance.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
         dbRepo = StellarDatabaseRepository(StellarDatabase.db(this.requireContext()).dao())
@@ -62,6 +67,31 @@ class HomeFragment : Fragment() {
         manager.setPrimaryClip(clipData)
 
         Toast.makeText(context, textView.hint.toString() + " copied!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showPrivateKeyOnClick() {
+        val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).dao())
+        lifecycleScope.launch {
+
+            val user = repo.users()
+
+            val fragment = PromptPinDialogFragment { pin ->
+
+                try {
+                    binding.tvAddressPrivate.text = user[0].privateKey.decrypt(pin.addKey())
+
+                } catch (e: Exception) {
+                    binding.tvAddressPrivate.text = "Pin code needed!"
+                    Snackbar.make(
+                        binding.root, "Wrong pin! Please try again!",
+                        BaseTransientBottomBar.LENGTH_SHORT
+
+                    ).show()
+                }
+            }
+            fragment.show(parentFragmentManager, "PromptPinDialogFragment")
+
+        }
     }
 
     override fun onResume() {
@@ -89,13 +119,13 @@ class HomeFragment : Fragment() {
 
                 //-------
                 lifecycleScope.launch {
-                    val user = dbRepo.users()[0]
-                    user.balance = balance
-                    dbRepo.update(user)
+                    val userRepo = dbRepo.users()[0]
+                    userRepo.balance = balance
+                    dbRepo.update(userRepo)
                 }
                 //-------
 
-                tvAddressPrivate.text = user?.getSecretSeed()
+                tvAddressPrivate.text = "Pin code needed!"
                 //user?.getSecretSeed().let { tvAddressPrivate.text = it }
                 qrCode.loadUrl("https://chart.googleapis.com/chart?chs=100x100&chld=M%7C0&cht=qr&chl=" + user?.getAccountId())
             } catch (e: JSONException) {

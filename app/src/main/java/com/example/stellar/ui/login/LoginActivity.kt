@@ -20,12 +20,14 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var db: StellarDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = StellarDatabase.db(this)
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
@@ -44,10 +46,25 @@ class LoginActivity : AppCompatActivity() {
 //            LoginRepository.getInstance().login(user[0].privateKey.toCharArray())
             val fragment = PromptPinDialogFragment { pin ->
 //                loginViewModel.login(user[0].privateKey, pin, this@LoginActivity)
-                LoginRepository.getInstance().login(user[0].privateKey.decrypt(pin.addKey()).toCharArray())
-                startActivity(intent)
-                setResult(RESULT_OK)
-                finish()
+                try {
+                    LoginRepository.getInstance()
+                        .login(user[0].privateKey.decrypt(pin.addKey()).toCharArray())
+                    startActivity(intent)
+                    setResult(RESULT_OK)
+                    finish()
+                }
+                catch(e: Exception){
+                    lifecycleScope.launch {
+                        db.contactsDao().clear()
+                        db.transactionsDao().clear()
+                        LoginRepository.getInstance().logout()
+                        StellarDatabaseRepository(db.dao()).logout()
+                    }
+                    Snackbar.make(
+                        binding.root, "Wrong pin! Please log in again!",
+                        BaseTransientBottomBar.LENGTH_SHORT
+                    ).show()
+                }
             }
             fragment.show(supportFragmentManager, "PromptPinDialogFragment")
         }
