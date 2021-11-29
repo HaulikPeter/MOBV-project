@@ -16,6 +16,7 @@ import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.data.model.LoginResult
 import com.example.stellar.ui.auth.addKey
+import com.example.stellar.ui.auth.decrypt
 import com.example.stellar.ui.auth.encrypt
 import kotlinx.coroutines.launch
 import org.stellar.sdk.KeyPair
@@ -57,7 +58,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val friendBotRequest = StringRequest(
             Request.Method.GET,
             url,
-            { login(keyPair.secretSeed.toString(), pin, context) },
+            { login(keyPair.secretSeed.concatToString(), pin, context) },
             { error -> println(error) }
         )
         friendBotRequest.retryPolicy = DefaultRetryPolicy(
