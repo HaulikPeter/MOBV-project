@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(this, navController, mAppBarConfiguration)
         setupWithNavController(navigationView, navController)
 
+        //podmienka dopisanana +
         binding.appBarMain.fab.setOnClickListener {
             val intent: Intent = if (navController.currentDestination?.id == R.id.nav_contacts) {
                 Intent(baseContext, ContactEditActivity::class.java)

@@ -6,6 +6,7 @@ import com.example.stellar.data.database.entities.ContactEntity
 
 /**
  * Data access object for contacts table
+ * rozhranie pre komunikaciu s databazou, konvertuje sql query na kotlin funkcie
  */
 @Dao
 interface ContactDatabaseDao {

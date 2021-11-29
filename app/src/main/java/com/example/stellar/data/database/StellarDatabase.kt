@@ -29,6 +29,7 @@ abstract class StellarDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: StellarDatabase? = null
 
+        //inicializacia tabulky
         fun db(context: Context): StellarDatabase {
             return INSTANCE ?: synchronized(this) {
                 var instance = INSTANCE

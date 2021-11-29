@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.stellar.R
 
+//?? na co sa pouziva activita
 class ContactEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
