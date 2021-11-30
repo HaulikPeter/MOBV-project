@@ -13,9 +13,16 @@ import androidx.fragment.app.DialogFragment
 import com.example.stellar.R
 import com.example.stellar.databinding.FragmentPromptPinBinding
 
-class PromptPinDialogFragment(private val onSuccess: (pin: String) -> Unit) : DialogFragment() {
+class PromptPinDialogFragment : DialogFragment {
 
-    constructor(onSuccess: (pin: String) -> Unit, message: String?) : this(onSuccess) {
+    private var onSuccess: (String) -> Unit?
+
+    constructor(onSuccess: (pin: String) -> Unit) {
+        this.onSuccess = onSuccess
+    }
+
+    constructor(onSuccess: (pin: String) -> Unit, message: String?) {
+        this.onSuccess = onSuccess
         this.message = message
     }
 

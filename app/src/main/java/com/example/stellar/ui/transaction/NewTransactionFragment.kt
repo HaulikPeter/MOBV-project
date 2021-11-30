@@ -33,7 +33,6 @@ class NewTransactionFragment : Fragment() {
         val btnCommit = binding.btnCommit
         val etAddress = binding.etAddress
         val etAmount = binding.etAmount
-        val etMemo = binding.etMemo
 
         val publicKey = requireActivity().intent.extras?.getString("publicKey")
         if (publicKey != null) {
@@ -45,16 +44,16 @@ class NewTransactionFragment : Fragment() {
                 return@setOnClickListener
 
 
-            val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).dao())
+            val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).usersDao())
             lifecycleScope.launch {
 
-                val user = repo.users()
+                val user = repo.getUsers()
 
                 val fragment = PromptPinDialogFragment { pin ->
 
                     try {
-                        var pk = user[0].privateKey.decrypt(pin.addKey()).toCharArray()
-                        startConnection(pk)
+                        val pk = user?.get(0)?.privateKey?.decrypt(pin.addKey())?.toCharArray()
+                        pk?.let { startConnection(it) }
 
 
                     } catch (e: Exception) {

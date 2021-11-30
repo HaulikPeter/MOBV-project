@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     db.contactsDao().clear()
                     db.transactionsDao().clear()
                     loginRepository.logout()
-                    StellarDatabaseRepository(db.dao()).logout()
+                    StellarDatabaseRepository(db.usersDao()).logout()
                     val intent = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 DialogInterface.BUTTON_NEGATIVE -> { lifecycleScope.launch {
                     db.transactionsDao().clear()
                     loginRepository.logout()
-                    StellarDatabaseRepository(db.dao()).logout()
+                    StellarDatabaseRepository(db.usersDao()).logout()
                     val intent = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()

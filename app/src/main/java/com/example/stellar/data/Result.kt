@@ -1,7 +1,7 @@
 package com.example.stellar.data
 
 /**
- * A generic class that holds a result success w/ data or an error exception.
+ * A generic class that holds a result success with data or an error exception.
  */
 sealed class Result<out T : Any> {
 

@@ -6,25 +6,24 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.stellar.data.database.entities.ContactEntity
 import com.example.stellar.data.database.entities.UserEntity
-import com.example.stellar.ui.transactionList.Transaction
+import com.example.stellar.data.database.entities.Transaction
 
 /**
- *  Class that defines the abstract layer of the database
+ *  The `StellarDatabase` class defines the abstract layer of the database.
  */
-
 @Database(entities = [
     UserEntity::class,
     ContactEntity::class,
     Transaction::class], version = 2, exportSchema = false)
 abstract class StellarDatabase : RoomDatabase() {
 
-    abstract fun dao(): StellarDatabaseDao
+    abstract fun usersDao(): UserDatabaseDao
     abstract fun contactsDao(): ContactDatabaseDao
     abstract fun transactionsDao(): TransactionDatabaseDao
 
-    // TODO: If user logs out, database must be ceased
-    // TODO: When logout, ask user whether wishes to delete its contacts
-
+    /**
+     * Creates a singleton class which can be accessed by calling the [db] function.
+     */
     companion object {
         @Volatile
         private var INSTANCE: StellarDatabase? = null

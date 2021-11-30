@@ -1,12 +1,12 @@
 package com.example.stellar.ui.transactionList
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stellar.data.database.StellarDatabase
+import com.example.stellar.data.database.entities.Transaction
 import com.example.stellar.data.model.LoggedInUser
 import com.example.stellar.ui.login.LoginRepository
 import kotlinx.coroutines.launch
@@ -15,7 +15,6 @@ import org.stellar.sdk.requests.EventListener
 import org.stellar.sdk.responses.operations.OperationResponse
 import org.stellar.sdk.responses.operations.PaymentOperationResponse
 import shadow.com.google.common.base.Optional
-import java.lang.Exception
 
 class TransactionsViewModel(context: Context) : ViewModel() {
 

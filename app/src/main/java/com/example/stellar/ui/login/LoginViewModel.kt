@@ -16,7 +16,6 @@ import com.example.stellar.data.database.StellarDatabaseRepository
 import com.example.stellar.data.database.entities.UserEntity
 import com.example.stellar.data.model.LoginResult
 import com.example.stellar.ui.auth.addKey
-import com.example.stellar.ui.auth.decrypt
 import com.example.stellar.ui.auth.encrypt
 import kotlinx.coroutines.launch
 import org.stellar.sdk.KeyPair
@@ -31,13 +30,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         if (result is Result.Success) {
 
             viewModelScope.launch {
-                val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).dao())
+                val dbRepo = StellarDatabaseRepository(StellarDatabase.db(context).usersDao())
 
                 val accountId = KeyPair.fromSecretSeed(secretSeed.toCharArray()).accountId
                 val encryptedPrivateKey = secretSeed.encrypt(pin.addKey())
 
                 val user = UserEntity(encryptedPrivateKey, accountId, null)
-                dbRepo.insert(user)
+                dbRepo.insertUser(user)
             }
 
             _loginResult.value =

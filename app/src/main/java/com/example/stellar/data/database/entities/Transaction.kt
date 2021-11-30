@@ -1,9 +1,12 @@
-package com.example.stellar.ui.transactionList
+package com.example.stellar.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * The `Transaction` class represents an entity for the transactions table used by the database.
+ */
 @Entity(tableName = "transactions_table")
 data class Transaction(
     @PrimaryKey(autoGenerate = false)

@@ -46,14 +46,16 @@ class HomeFragment : Fragment() {
         binding.tvAddressPrivate.setOnClickListener { showPrivateKeyOnClick() }
         binding.tvBalance.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
-        dbRepo = StellarDatabaseRepository(StellarDatabase.db(this.requireContext()).dao())
+        dbRepo = StellarDatabaseRepository(StellarDatabase.db(this.requireContext()).usersDao())
 
         lifecycleScope.launch {
-            val user = dbRepo.users()[0]
-            if (user.balance.isNullOrEmpty()) {
-                homeViewModel.getUser()?.observe(viewLifecycleOwner, { observeUser(it) })
-            } else {
-                user.balance?.let { binding.tvBalance.text = it }
+            val user = dbRepo.getUsers()?.get(0)
+            if (user != null) {
+                if (user.balance.isNullOrEmpty()) {
+                    homeViewModel.getUser()?.observe(viewLifecycleOwner, { observeUser(it) })
+                } else {
+                    user.balance?.let { binding.tvBalance.text = it }
+                }
             }
         }
 
@@ -69,15 +71,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun showPrivateKeyOnClick() {
-        val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).dao())
+        val repo = StellarDatabaseRepository(StellarDatabase.db(requireContext()).usersDao())
         lifecycleScope.launch {
 
-            val user = repo.users()
+            val user = repo.getUsers()
 
             val fragment = PromptPinDialogFragment { pin ->
 
                 try {
-                    binding.tvAddressPrivate.text = user[0].privateKey.decrypt(pin.addKey())
+                    binding.tvAddressPrivate.text = user?.get(0)?.privateKey?.decrypt(pin.addKey())
                     binding.tvAddressPrivate.setOnClickListener { copyTextViewContentToClipboard(it as TextView) }
 
                 } catch (e: Exception) {
@@ -118,9 +120,9 @@ class HomeFragment : Fragment() {
 
                 //-------
                 lifecycleScope.launch {
-                    val userRepo = dbRepo.users()[0]
-                    userRepo.balance = balance
-                    dbRepo.update(userRepo)
+                    val userRepo = dbRepo.getUsers()?.get(0)
+                    userRepo?.balance = balance
+                    userRepo?.let { dbRepo.updateUser(it) }
                 }
                 //-------
 

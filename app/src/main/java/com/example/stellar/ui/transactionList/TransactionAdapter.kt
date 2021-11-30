@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stellar.R
+import com.example.stellar.data.database.entities.Transaction
 
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 

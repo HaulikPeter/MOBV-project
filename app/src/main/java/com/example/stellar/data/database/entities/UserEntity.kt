@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Entity for the structure of the user table of the currently logged in user.
+ * The `UserEntity` class represents an entity for the user table used by the database.
  */
 @Entity(tableName = "user_table")
 data class UserEntity(

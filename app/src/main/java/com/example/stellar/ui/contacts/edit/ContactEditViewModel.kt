@@ -1,8 +1,10 @@
 package com.example.stellar.ui.contacts.edit
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.stellar.data.database.ContactDatabaseDao
 import com.example.stellar.data.database.entities.ContactEntity
+import kotlinx.coroutines.launch
 
 class ContactEditViewModel(private val contactDatabaseDao: ContactDatabaseDao) : ViewModel() {
     var contact: ContactEntity? = null
@@ -18,6 +20,6 @@ class ContactEditViewModel(private val contactDatabaseDao: ContactDatabaseDao) :
     }
 
     fun saveContact() {
-        contactDatabaseDao.insert(contact!!)
+        viewModelScope.launch { contact?.let { contactDatabaseDao.insert(it) } }
     }
 }

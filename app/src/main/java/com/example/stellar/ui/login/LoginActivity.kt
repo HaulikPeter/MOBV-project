@@ -2,8 +2,6 @@ package com.example.stellar.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -39,10 +37,10 @@ class LoginActivity : AppCompatActivity() {
 
         val intent = Intent(this, MainActivity::class.java)
 
-        val repo = StellarDatabaseRepository(StellarDatabase.db(this).dao())
+        val repo = StellarDatabaseRepository(StellarDatabase.db(this).usersDao())
         lifecycleScope.launch {
-            val user = repo.users()
-            if (user.isEmpty())
+            val user = repo.getUsers()
+            if (user.isNullOrEmpty())
                 return@launch
 
 //            LoginRepository.getInstance().login(user[0].privateKey.toCharArray())
@@ -60,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                         db.contactsDao().clear()
                         db.transactionsDao().clear()
                         LoginRepository.getInstance().logout()
-                        StellarDatabaseRepository(db.dao()).logout()
+                        StellarDatabaseRepository(db.usersDao()).logout()
                     }
                     Snackbar.make(
                         binding.root, "Wrong pin! Database cleared!",
