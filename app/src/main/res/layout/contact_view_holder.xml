@@ -37,6 +37,7 @@
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:background="#FFFFFF"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#673AB7"
-            android:tint="#FFFFFF"
+            app:tint="#FFFFFF"
             app:srcCompat="@drawable/transactions" />
 
     </LinearLayout>
