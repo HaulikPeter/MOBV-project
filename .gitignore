@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+/.idea
+*.apk
+*.abb
+/app/debug
+/app/release
