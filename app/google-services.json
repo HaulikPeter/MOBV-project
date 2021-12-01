@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "10342786673",
+    "project_id": "stellar-f9285",
+    "storage_bucket": "stellar-f9285.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10342786673:android:bec8d5d431ca7baffbddd0",
+        "android_client_info": {
+          "package_name": "com.example.stellar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10342786673-vv8c4sp6bfmdamfk6odlt4eqhe4jkuli.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGC0JvFXyoEPsaRiUlyq_XA4_QNCbVhKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10342786673-vv8c4sp6bfmdamfk6odlt4eqhe4jkuli.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
