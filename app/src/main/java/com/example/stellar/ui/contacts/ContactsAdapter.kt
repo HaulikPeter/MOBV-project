@@ -1,6 +1,8 @@
 package com.example.stellar.ui.contacts
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
@@ -18,22 +20,23 @@ class ContactsAdapter(
     val onDelete: (contact: ContactEntity) -> Unit,
     val onEdit: (contact: ContactEntity) -> Unit,
     val onTransaction: (contact: ContactEntity) -> Unit
-) : RecyclerView.Adapter<ContactViewHolder>() {
+) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     private var contactList: MutableList<ContactEntity>
 
     // The function sets the contact list
+    @SuppressLint("NotifyDataSetChanged")
     fun setContactList(contactList: MutableList<ContactEntity>) {
         this.contactList = contactList
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ContactViewHolder(inflater.inflate(R.layout.contact_view_holder, parent, false))
+        return ViewHolder(inflater.inflate(R.layout.contact_view_holder, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = contactList[position]
         val nameText = holder.itemView.findViewById<TextView>(R.id.contact_name_text)
         val publicKeyText = holder.itemView.findViewById<TextView>(R.id.contact_publicKey_text)
@@ -63,4 +66,6 @@ class ContactsAdapter(
     init {
         contactList = LinkedList()
     }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

@@ -6,6 +6,8 @@ import com.example.stellar.data.database.ContactDatabaseDao
 
 class ContactEditViewModelFactory(private val contactDatabaseDao: ContactDatabaseDao) :
     ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(ContactEditViewModel::class.java)) {
             ContactEditViewModel(contactDatabaseDao) as T

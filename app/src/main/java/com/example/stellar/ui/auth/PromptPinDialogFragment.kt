@@ -1,5 +1,6 @@
 package com.example.stellar.ui.auth
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +13,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.example.stellar.R
 import com.example.stellar.databinding.FragmentPromptPinBinding
+import android.content.pm.ActivityInfo
 
-/*
-Fragment for the pin code
-User is required to give in 4 numbers which are then returned to other fragments in the application
+
+
+
+/**
+ * Fragment for the pin code
+ * User is required to give in 4 numbers which are then returned to other fragments in the application
  */
 
 class PromptPinDialogFragment : DialogFragment {
@@ -90,6 +95,19 @@ class PromptPinDialogFragment : DialogFragment {
         }
 
         return binding.root
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    override fun onResume() {
+        super.onResume()
+        //lock screen
+        requireActivity().requestedOrientation = resources.configuration.orientation
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //set rotation to sensor dependent
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
     }
 
 }

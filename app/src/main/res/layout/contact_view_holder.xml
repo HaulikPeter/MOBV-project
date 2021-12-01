@@ -12,23 +12,22 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:gravity="start"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="RelativeOverlap">
 
         <TextView
             android:id="@+id/contact_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/contact_publicKey_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="#FFFFFF"
         android:gravity="end"
         android:orientation="horizontal">
@@ -46,14 +45,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/logout" />
+            app:srcCompat="@drawable/logout"
+            android:contentDescription="@string/delete_label" />
 
         <ImageButton
             android:id="@+id/contact_btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_edit_24" />
+            app:srcCompat="@drawable/ic_baseline_edit_24"
+            android:contentDescription="@string/edit_label" />
 
         <ImageButton
             android:id="@+id/contact_btn_transaction"
@@ -62,7 +63,8 @@
             android:layout_weight="1"
             android:backgroundTint="#673AB7"
             app:tint="#FFFFFF"
-            app:srcCompat="@drawable/transactions" />
+            app:srcCompat="@drawable/transactions"
+            android:contentDescription="@string/transaction" />
 
     </LinearLayout>
 

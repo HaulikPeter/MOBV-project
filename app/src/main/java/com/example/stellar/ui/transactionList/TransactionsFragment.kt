@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.stellar.databinding.FragmentTransactionsBinding
 
-/*
-Fragment for viewing all transactions in the Main activity
-This fragment is responsible for creating a view for incoming transactions
-Segments of binding are passed to the viewmodel
+/**
+ * Fragment for viewing all transactions in the Main activity
+ * This fragment is responsible for creating a view for incoming transactions
+ * Segments of binding are passed to the viewmodel
  */
 
 class TransactionsFragment : Fragment() {

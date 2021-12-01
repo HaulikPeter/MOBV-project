@@ -18,35 +18,30 @@
             android:id="@+id/tvSourceAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tvSourceAddress"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tvTransactionAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tvTransactionAmount"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tvDestinationAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tvDestinationAddress"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tvTransactionMemo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tvTransactionMemo"
             android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvTransactionDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tvTransactionDate"
             android:textColor="@color/white" />
     </LinearLayout>
 

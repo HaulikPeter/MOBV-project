@@ -51,7 +51,6 @@
                 android:hint="@string/address_public_placeholder"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="tvAddressPublic"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -87,7 +86,6 @@
                 android:hint="@string/address_private_placeholder"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="tvAddressPrivate"
                 android:textAlignment="center" />
         </LinearLayout>
 
@@ -119,7 +117,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/balance_placeholder"
-                android:text="tvBalance"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="24sp"

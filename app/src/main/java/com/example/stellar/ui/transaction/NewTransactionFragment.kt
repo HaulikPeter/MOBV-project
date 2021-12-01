@@ -19,11 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.stellar.sdk.*
 
-/*
-Fragment for sending currency in form of transaction
-If fields amount and public key are not fulfilled, the transaction cannot be commited
-If fields amount and public key have wrong formula or the public key does not exist on stellar, an error is returned
-Before commiting, pin code is required
+/**
+ * Fragment for sending currency in form of transaction
+ * If fields amount and public key are not fulfilled, the transaction cannot be commited
+ * If fields amount and public key have wrong formula or the public key does not exist on stellar, an error is returned
+ * Before commiting, pin code is required
  */
 
 class NewTransactionFragment : Fragment() {

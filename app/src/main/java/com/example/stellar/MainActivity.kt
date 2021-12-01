@@ -21,6 +21,10 @@ import com.example.stellar.ui.login.LoginRepository
 import com.example.stellar.ui.transaction.NewTransactionActivity
 import kotlinx.coroutines.launch
 
+/**
+ * After login, the `MainActivity` class starts. It initializes the navigation bar, menu, floating
+ * action button.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mAppBarConfiguration: AppBarConfiguration
@@ -28,9 +32,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loginRepository: LoginRepository
     private lateinit var db: StellarDatabase
 
+    /**
+     * When creating the View it initializes above variables and sets the navigation, the
+     * floating action button and the logout menu.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflating the binding.
         binding = ActivityMainBinding.inflate(layoutInflater)
         loginRepository = LoginRepository.getInstance()
         db = StellarDatabase.db(this)
@@ -47,10 +56,13 @@ class MainActivity : AppCompatActivity() {
             .setOpenableLayout(binding.drawerLayout)
             .build()
 
+        // Initializing the navigation controller.
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
         setupActionBarWithNavController(this, navController, mAppBarConfiguration)
         setupWithNavController(navigationView, navController)
 
+        // If we are in the contacts section, the action button will serve as a contact adder.
+        // Else as a transaction creator.
         binding.appBarMain.fab.setOnClickListener {
             val intent: Intent = if (navController.currentDestination?.id == R.id.nav_contacts) {
                 Intent(baseContext, ContactEditActivity::class.java)
@@ -61,8 +73,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Inflates the menu and sets a listener to its only element.
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds the logout function.
         menuInflater.inflate(R.menu.menu, menu)
         menu?.getItem(0)?.setOnMenuItemClickListener {
             askToDeleteContactsAndLogout()
@@ -72,6 +87,10 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * When logout is pressed this asks the user whether he wants to keep the contacts or not.
+     * It creates an [AlertDialog] with positive, negative and neutral options.
+     */
     private fun askToDeleteContactsAndLogout() {
         val listener = DialogInterface.OnClickListener { _, which ->
             when (which) {

@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stellar.R
 import com.example.stellar.data.database.entities.Transaction
 
-/*
-Adapter for transaction list required for Recyclerview
-If a new transaction is formed, the adapter puts every information to the fields in recyclerview
+/**
+ * Adapter for transaction list required for Recyclerview
+ * If a new transaction is formed, the adapter puts every information to the fields in recyclerview
  */
 
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {

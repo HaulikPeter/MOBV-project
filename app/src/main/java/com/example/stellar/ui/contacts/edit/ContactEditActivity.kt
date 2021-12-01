@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.stellar.R
 
-/*
-* The Activity class defines the following call backs. Generated Android Studio.
-*/
+/**
+ * The Activity class defines the following call backs. Generated Android Studio.
+ */
 class ContactEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

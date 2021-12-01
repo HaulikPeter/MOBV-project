@@ -31,4 +31,13 @@
     <string name="new_transaction_memo_text_placeholder">Memo text</string>
     <string name="btn_commit">commit</string>
     <string name="require_pin">Pin code needed!</string>
+    <string name="add_label">Add</string>
+    <string name="name_label">Name</string>
+    <string name="public_key_label">Public key</string>
+    <string name="btn_save">Save</string>
+    <string name="delete_label">Delete</string>
+    <string name="edit_label">Edit</string>
+    <string name="transaction">Transaction</string>
+    <string name="enter_pin_label">Enter PIN</string>
+    <string name="circe">circe</string>
 </resources>

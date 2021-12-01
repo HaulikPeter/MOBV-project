@@ -1,28 +1,19 @@
 package com.example.stellar.ui.contacts.edit
 
-import android.annotation.SuppressLint
-import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import com.example.stellar.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.stellar.data.database.ContactDatabaseDao
 import com.example.stellar.data.database.StellarDatabase
-import com.example.stellar.databinding.ContactEditActivityBinding
 import com.example.stellar.databinding.ContactEditFragmentBinding
-import com.example.stellar.ui.contacts.ContactsViewModel
-import com.example.stellar.ui.contacts.ContactsViewModelFactory
-import com.example.stellar.ui.login.LoginRepository
-import org.stellar.sdk.*
 
-/*
-* Interaction with fragments is done through FragmentManager,
-* which can be obtained via Activity.getFragmentManager() and Fragment.getFragmentManager().
-*/
+/**
+ * Interaction with fragments is done through FragmentManager,
+ * which can be obtained via Activity.getFragmentManager() and Fragment.getFragmentManager().
+ */
 class ContactEditFragment : Fragment() {
 
     companion object {

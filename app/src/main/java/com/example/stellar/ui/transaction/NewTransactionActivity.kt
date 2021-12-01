@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stellar.R
 
-/*
-Activity for sending new transactions
+/**
+ * Activity for sending new transactions
  */
 
 class NewTransactionActivity : AppCompatActivity() {
