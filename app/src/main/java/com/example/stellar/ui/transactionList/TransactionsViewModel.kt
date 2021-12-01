@@ -16,6 +16,12 @@ import org.stellar.sdk.responses.operations.OperationResponse
 import org.stellar.sdk.responses.operations.PaymentOperationResponse
 import shadow.com.google.common.base.Optional
 
+/*
+Viewmodel for the list of transactions
+If transactions are not present in the database they are pulled from server and saved in the database
+The server is continuously streamed for new transactions
+ */
+
 class TransactionsViewModel(context: Context) : ViewModel() {
 
     private val userData: MutableLiveData<LoggedInUser?>?

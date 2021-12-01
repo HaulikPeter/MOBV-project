@@ -13,6 +13,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.stellar.R
 import com.example.stellar.databinding.FragmentPromptPinBinding
 
+/*
+Fragment for the pin code
+User is required to give in 4 numbers which are then returned to other fragments in the application
+ */
+
 class PromptPinDialogFragment : DialogFragment {
 
     private var onSuccess: (String) -> Unit?
