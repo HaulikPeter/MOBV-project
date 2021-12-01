@@ -10,6 +10,8 @@ import com.example.stellar.data.database.entities.ContactEntity
 import java.util.*
 
 /**
+ * Adapter connects data to recyclerview. The data adjusts them to view them in ViewHolder.
+ * And RecyclerView uses the adapter to see how to display the data on the screen.
  * https://developer.android.com/codelabs/kotlin-android-training-recyclerview-fundamentals#2
  */
 class ContactsAdapter(
@@ -20,6 +22,7 @@ class ContactsAdapter(
 
     private var contactList: MutableList<ContactEntity>
 
+    // The function sets the contact list
     fun setContactList(contactList: MutableList<ContactEntity>) {
         this.contactList = contactList
         notifyDataSetChanged()
@@ -38,6 +41,7 @@ class ContactsAdapter(
         nameText.text = contact.name
         publicKeyText.text = contact.publicKey
 
+        // Buttons behavior
         val deleteBtn = holder.itemView.findViewById<AppCompatImageButton>(R.id.contact_btn_delete)
         val editBtn = holder.itemView.findViewById<AppCompatImageButton>(R.id.contact_btn_edit)
         val transactionBtn = holder.itemView.findViewById<AppCompatImageButton>(R.id.contact_btn_transaction)

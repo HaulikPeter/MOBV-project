@@ -19,6 +19,10 @@ import com.example.stellar.ui.contacts.ContactsViewModelFactory
 import com.example.stellar.ui.login.LoginRepository
 import org.stellar.sdk.*
 
+/*
+* Interaction with fragments is done through FragmentManager,
+* which can be obtained via Activity.getFragmentManager() and Fragment.getFragmentManager().
+*/
 class ContactEditFragment : Fragment() {
 
     companion object {
@@ -41,6 +45,9 @@ class ContactEditFragment : Fragment() {
         val publicKeyText = binding.contactEditPublicKey
         val btn = binding.contactEditBtn
 
+        /*
+         * Condition of calling the correct one FloatingActionButton
+         */
         Thread {
             viewModel.loadContact(publicKey)
             if (viewModel.contact?.name?.length ?: 0 > 0) {
@@ -51,6 +58,7 @@ class ContactEditFragment : Fragment() {
             }
         }.start()
 
+        //method that is called when the view (component) is clicked.
         btn.setOnClickListener {
             Thread {
                 viewModel.contact!!.name = nameText.text.toString()

@@ -7,7 +7,7 @@ import com.example.stellar.data.database.entities.ContactEntity
 
 class ContactsViewModel(contactDatabaseDao: ContactDatabaseDao) : ViewModel() {
     /**
-     * Aktualny zoznam kontaktov, nacitava ho ContactsFragment
+     * Current contact list, loading ContactsFragment
      */
     private val contacts: LiveData<MutableList<ContactEntity>> = contactDatabaseDao.getAllContacts()
 

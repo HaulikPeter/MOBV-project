@@ -49,18 +49,11 @@ class ContactsFragment : Fragment() {
         )
         binding = FragmentContactsBinding.inflate(inflater, container, false)
         binding.contactsList.adapter = adapter
-        //  prepojenie db so zoznamom kontaktov v recycler view
+
+        // Linking database with contact list in Recycler View
         viewModel.getContacts().observe(viewLifecycleOwner, { contacts: MutableList<ContactEntity> ->
             adapter.setContactList(contacts)
         })
-
-        // TODO: len na testovanie, zmazat potom
-//        Thread {
-//            for (i in 1..20) {
-//                database.insert(ContactEntity("public key $i", "Jozko $i"))
-//            }
-//            println("insert")
-//        }.start()
 
         return binding.root
     }

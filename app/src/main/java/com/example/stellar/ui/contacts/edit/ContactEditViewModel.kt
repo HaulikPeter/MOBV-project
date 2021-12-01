@@ -9,16 +9,19 @@ import kotlinx.coroutines.launch
 class ContactEditViewModel(private val contactDatabaseDao: ContactDatabaseDao) : ViewModel() {
     var contact: ContactEntity? = null
 
+    //Load contacts
     fun loadContact(publicKey: String?) {
+        //If we create new contact
         if (publicKey == null) {
-            // ak vytvarame novy kontakt
+
             contact = ContactEntity("", "")
         } else {
-            // ak editujeme existujuci kontakt
+            // If we edit existing contact
             contact = contactDatabaseDao.findByPublicKey(publicKey)
         }
     }
 
+    // Save contact
     fun saveContact() {
         viewModelScope.launch { contact?.let { contactDatabaseDao.insert(it) } }
     }
