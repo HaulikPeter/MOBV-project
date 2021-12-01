@@ -20,11 +20,19 @@ import com.example.stellar.ui.auth.encrypt
 import kotlinx.coroutines.launch
 import org.stellar.sdk.KeyPair
 
+/**
+ * Class for login and sign up
+ */
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
+    /**
+     * The function gets secret seed and pin and identifies the user
+     * from the database
+     * The login can be successfull or failed
+     */
     fun login(secretSeed: String, pin: String, context: Context) {
         val result = loginRepository.login(secretSeed.toCharArray())
         if (result is Result.Success) {
@@ -47,7 +55,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    //Toto bolo pridane
+    /**
+     * The function gets a generated pin by the user
+     * It runs on the test network, we get 10,000
+     * testXLM from Friendbot, which is a friendly account funding tool
+     */
     fun signUp(context: Context, pin: String) {
         val keyPair = KeyPair.random()
         // https://developer.android.com/training/volley/simple#kotlin
